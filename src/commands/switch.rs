@@ -2,6 +2,9 @@ use crate::error::ItError;
 use std::fs;
 pub fn switch(branch_name: String) -> Result<(), ItError> {
     let repo_path = std::env::current_dir()?.join(".it");
+    if !repo_path.exists() || !repo_path.is_dir() {
+        return Err(ItError::NotARepository);
+    }
     let heads_path = repo_path.join("refs/heads");
 
     let target_branch_path = heads_path.join(&branch_name);
