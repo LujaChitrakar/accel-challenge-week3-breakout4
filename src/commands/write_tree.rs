@@ -14,7 +14,10 @@ pub fn write_tree() -> Result<String, ItError> {
         return Err(ItError::NothingToCommit);
     }
 
-    build_tree(&entries, "")
+    let hash = build_tree(&entries, "")?;
+    println!("{}", hash);
+
+    Ok(hash)
 }
 
 //      prefix="" and path="src/main.rs" -> component="src", rest="main.rs"
@@ -72,8 +75,7 @@ fn build_tree(entries: &[IndexEntry], prefix: &str) -> Result<String, ItError> {
     let tree_object = build_object(&tree_content, "tree");
     let hash = compute_hash(&tree_object);
     let compressed = compress_data(&tree_object)?;
-    store_object(&hash, &compressed)?;
+    // store_object(&hash, &compressed)?;
 
-    println!("tree written: {}", hash);
     Ok(hash)
 }
