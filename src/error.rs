@@ -13,6 +13,8 @@ pub enum ItError {
     BranchNotFound(String),
 
     Io(io::Error),
+
+    NothingToCommit,
 }
 impl fmt::Display for ItError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -33,6 +35,9 @@ impl fmt::Display for ItError {
                 write!(f, "fatal: branch '{name}' does not exist")
             }
             ItError::Io(e) => write!(f, "fatal: {e}"),
+            ItError::NothingToCommit => {
+                write!(f, "NothingToCommit")
+            }
         }
     }
 }

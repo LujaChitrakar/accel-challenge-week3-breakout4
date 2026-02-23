@@ -9,7 +9,12 @@ pub fn init() -> Result<(), std::io::Error> {
 
     fs::create_dir_all(repo_path.join("objects"))?;
     fs::create_dir_all(repo_path.join("refs/heads"))?;
-        
+
+    fs::write(
+        repo_path.join("refs/heads/main"),
+        "0000000000000000000000000000000000000000\n",
+    )?;
+
     fs::write(repo_path.join("HEAD"), format!("ref: refs/heads/main\n"))?;
 
     // LOG FILES
